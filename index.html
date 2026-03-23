@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Card for Mom</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Georgia, serif;
+      background: linear-gradient(to bottom, #a9d8ee 0 45%, #e8d3a0 45% 100%);
+      padding: 24px;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .scene {
+      perspective: 1800px;
+    }
+
+    .card {
+      position: relative;
+      width: min(900px, 92vw);
+      height: min(540px, 70vw);
+      min-height: 480px;
+    }
+
+    .inside {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #fffaf0;
+      border: 2px solid #d8c79d;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    .left-page,
+    .right-page {
+      padding: 34px;
+      position: relative;
+    }
+
+    .left-page {
+      border-right: 1px solid #e5d9bb;
+    }
+
+    .left-page h2,
+    .right-page h2 {
+      margin: 0 0 18px;
+      color: #165e75;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.15;
+    }
+
+    .left-page p,
+    .right-page p {
+      margin: 0;
+      color: #6b532d;
+      font-size: 1.15rem;
+      line-height: 1.8;
+    }
+
+    .message-box {
+      margin-top: 12px;
+      border: 2px dashed #cfb87c;
+      border-radius: 14px;
+      background: #fffdf8;
+      min-height: 260px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .message-top {
+      color: #6b532d;
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+    }
+
+    .message-content {
+      flex: 1;
+      color: #7a6540;
+      font-size: 1.08rem;
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    .message-bottom {
+      margin-top: 22px;
+      color: #6b532d;
+      font-size: 1.1rem;
+    }
+
+    .cover {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: transform 0.9s ease;
+      z-index: 2;
+    }
+
+    .card.open .cover {
+      transform: rotateY(-180deg);
+    }
+
+    .front,
+    .back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 18px 0 0 18px;
+      border: 2px solid #d8c79d;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 34px;
+    }
+
+    .front {
+      background: linear-gradient(to bottom, #8fcfe9 0 48%, #ecd79c 48% 100%);
+      box-shadow: 12px 0 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .back {
+      transform: rotateY(180deg);
+      background: #fffaf0;
+      color: #6b532d;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .front-content {
+      background: rgba(255, 250, 240, 0.82);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 320px;
+    }
+
+    .front h1 {
+      margin: 0 0 18px;
+      color: #165e75;
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      line-height: 1.05;
+    }
+
+    .front p {
+      margin: 0;
+      color: #6b532d;
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+
+    .toggle-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-size: 1rem;
+      background: #fff8e8;
+      color: #165e75;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 700px) {
+      .card {
+        height: 560px;
+      }
+
+      .left-page,
+      .right-page,
+      .front,
+      .back {
+        padding: 22px;
+      }
+
+      .left-page p,
+      .right-page p,
+      .front p,
+      .message-top,
+      .message-content,
+      .message-bottom {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="scene">
+      <div class="card" id="card">
+        <div class="inside">
+          <div class="left-page">
+            <h2>Happy Birthday, Mom</h2>
+            <p>
+              But there is no seashell quite like you!
+              So, celebrate like the Queen Conch you are!
+            </p>
+          </div>
+
+          <div class="right-page">
+            <div class="message-box">
+              <div class="message-top">Dear Mom,</div>
+
+              <div class="message-content">YOUR TEXT HERE</div>
+
+              <div class="message-bottom">Love, Maddie</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cover">
+          <div class="front">
+            <div class="front-content">
+              <h1>Happy Birthday</h1>
+              <p>
+                There are plenty of fish in the sea,
+                and more than enough grains of sand on a beach...
+              </p>
+            </div>
+          </div>
+
+          <div class="back">
+            A birthday card made with love.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="toggle-btn" id="toggleBtn">Open / Close Card</button>
+  </div>
+
+  <script>
+    const card = document.getElementById("card");
+    const toggleBtn = document.getElementById("toggleBtn");
+
+    toggleBtn.addEventListener("click", () => {
+      card.classList.toggle("open");
+    });
+  </script>
+</body>
+</html>
