@@ -1,267 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Birthday Card for Mom</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Card for Mom</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      font-family: Georgia, serif;
-      background: linear-gradient(to bottom, #a9d8ee 0 45%, #e8d3a0 45% 100%);
-      padding: 24px;
-    }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: #b9f2f8;
+            font-family: Georgia, serif;
+            padding: 24px;
+        }
 
-    .wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
 
-    .scene {
-      perspective: 1800px;
-    }
+        .card-area {
+            position: relative;
+            width: min(920px, 92vw);
+            height: min(560px, 60vw);
+            min-height: 500px;
+            display: grid;
+            place-items: center;
+        }
 
-    .card {
-      position: relative;
-      width: min(900px, 92vw);
-      height: min(540px, 70vw);
-      min-height: 480px;
-    }
+        /* CLOSED COVER */
+        .cover {
+            position: absolute;
+            width: min(460px, 46vw);
+            height: 100%;
+            background: linear-gradient(to bottom, #9ed9ef 0 45%, #efd89e 45% 100%);
+            border: 2px solid #e7d4ad;
+            border-radius: 18px;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+            transform-origin: left center;
+            transition: transform 0.8s ease, opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 3;
+            overflow: hidden;
+        }
 
-    .inside {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #fffaf0;
-      border: 2px solid #d8c79d;
-      border-radius: 18px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
-    }
+        .cover::before {
+            content: "";
+            position: absolute;
+            inset: 14px;
+            border: 2px solid rgba(255, 248, 235, 0.6);
+            border-radius: 12px;
+            pointer-events: none;
+        }
 
-    .left-page,
-    .right-page {
-      padding: 34px;
-      position: relative;
-    }
+        .cover-content {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 250, 240, 0.45);
+            border-radius: 18px;
+            padding: 28px 24px;
+        }
 
-    .left-page {
-      border-right: 1px solid #e5d9bb;
-    }
+        .cover h1 {
+            margin: 10px 0 18px;
+            color: #155f74;
+            font-size: clamp(2.4rem, 4vw, 3.5rem);
+            line-height: 1.05;
+        }
 
-    .left-page h2,
-    .right-page h2 {
-      margin: 0 0 18px;
-      color: #165e75;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      line-height: 1.15;
-    }
+        .cover p {
+            margin: 0;
+            color: #7b5c2b;
+            font-size: 1.18rem;
+            line-height: 1.75;
+        }
 
-    .left-page p,
-    .right-page p {
-      margin: 0;
-      color: #6b532d;
-      font-size: 1.15rem;
-      line-height: 1.8;
-    }
+        .emoji-top,
+        .emoji-bottom {
+            font-size: 1.9rem;
+            letter-spacing: 8px;
+            color: #fff8ee;
+        }
 
-    .message-box {
-      margin-top: 12px;
-      border: 2px dashed #cfb87c;
-      border-radius: 14px;
-      background: #fffdf8;
-      min-height: 260px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+        .emoji-top {
+            margin-bottom: 12px;
+        }
 
-    .message-top {
-      color: #6b532d;
-      font-size: 1.1rem;
-      margin-bottom: 18px;
-    }
+        .emoji-bottom {
+            margin-top: 18px;
+        }
 
-    .message-content {
-      flex: 1;
-      color: #7a6540;
-      font-size: 1.08rem;
-      line-height: 1.8;
-      white-space: pre-line;
-    }
+        /* OPEN INSIDE */
+        .inside {
+            position: absolute;
+            width: min(920px, 92vw);
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.16);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1;
+        }
 
-    .message-bottom {
-      margin-top: 22px;
-      color: #6b532d;
-      font-size: 1.1rem;
-    }
+        .page {
+            position: relative;
+            padding: 34px;
+        }
 
-    .cover {
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 50%;
-      transform-origin: left center;
-      transform-style: preserve-3d;
-      transition: transform 0.9s ease;
-      z-index: 2;
-    }
+        .left-page {
+            background: linear-gradient(180deg, #cef3f0 0%, #d9eefa 100%);
+            border-right: 1px solid #d9e5fa;
+        }
 
-    .card.open .cover {
-      transform: rotateY(-180deg);
-    }
+        .right-page {
+            background: linear-gradient(180deg, #cee9f3 0%, #fbf4e1 100%);
+        }
 
-    .front,
-    .back {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-      border-radius: 18px 0 0 18px;
-      border: 2px solid #d8c79d;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 34px;
-    }
+        .fold {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 12px;
+            transform: translateX(-50%);
+            background: linear-gradient(
+                    to right,
+                    rgba(120, 95, 55, 0.08),
+                    rgba(255,255,255,0.35),
+                    rgba(120, 95, 55, 0.08)
+            );
+            pointer-events: none;
+        }
 
-    .front {
-      background: linear-gradient(to bottom, #8fcfe9 0 48%, #ecd79c 48% 100%);
-      box-shadow: 12px 0 20px rgba(0, 0, 0, 0.12);
-    }
+        .left-page h2 {
+            margin: 42px 0 18px;
+            color: #155f74;
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            line-height: 1.15;
+        }
 
-    .back {
-      transform: rotateY(180deg);
-      background: #fffaf0;
-      color: #6b532d;
-      font-style: italic;
-      font-size: 1.05rem;
-      line-height: 1.7;
-    }
+        .left-page p {
+            margin: 0;
+            color: #7b5c2b;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
 
-    .front-content {
-      background: rgba(255, 250, 240, 0.82);
-      border: 2px solid rgba(255, 255, 255, 0.7);
-      border-radius: 16px;
-      padding: 28px 24px;
-      max-width: 320px;
-    }
+        .message-box {
+            margin-top: 24px;
+            min-height: 320px;
+            border: 2px dashed #d3ba7d;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.58);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .front h1 {
-      margin: 0 0 18px;
-      color: #165e75;
-      font-size: clamp(2.4rem, 4vw, 3.4rem);
-      line-height: 1.05;
-    }
+        .message-top,
+        .message-bottom {
+            color: #6f5731;
+            font-size: 1.08rem;
+        }
 
-    .front p {
-      margin: 0;
-      color: #6b532d;
-      font-size: 1.15rem;
-      line-height: 1.7;
-    }
+        .message-content {
+            flex: 1;
+            margin: 18px 0 24px;
+            color: #7a6540;
+            font-size: 0.85rem;
+            line-height: 1.85;
+            white-space: pre-line;
+        }
 
-    .toggle-btn {
-      border: none;
-      border-radius: 999px;
-      padding: 12px 22px;
-      font-size: 1rem;
-      background: #fff8e8;
-      color: #165e75;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-      cursor: pointer;
-    }
+        .beach-decor {
+            position: absolute;
+            font-size: 1.7rem;
+            opacity: 0.95;
+        }
 
-    .toggle-btn:hover {
-      transform: translateY(-1px);
-    }
+        .d1 { top: 16px; left: 18px; }
+        .d2 { top: 16px; right: 18px; }
+        .d3 { bottom: 16px; left: 20px; }
+        .d4 { bottom: 16px; right: 22px; }
 
-    @media (max-width: 700px) {
-      .card {
-        height: 560px;
-      }
+        /* OPEN STATE */
+        .card-area.open .cover {
+            transform: rotateY(-120deg);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
 
-      .left-page,
-      .right-page,
-      .front,
-      .back {
-        padding: 22px;
-      }
+        .card-area.open .inside {
+            opacity: 1;
+            visibility: visible;
+        }
 
-      .left-page p,
-      .right-page p,
-      .front p,
-      .message-top,
-      .message-content,
-      .message-bottom {
-        font-size: 1rem;
-      }
-    }
-  </style>
+        .toggle-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 12px 22px;
+            background: #ffffff;
+            color: #155f74;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 720px) {
+            .card-area {
+                min-height: 440px;
+                height: 440px;
+            }
+
+            .cover,
+            .inside {
+                width: min(92vw, 920px);
+            }
+
+            .page {
+                padding: 22px;
+            }
+
+            .left-page h2 {
+                margin-top: 28px;
+            }
+
+            .left-page p,
+            .cover p,
+            .message-top,
+            .message-content,
+            .message-bottom {
+                font-size: 0.98rem;
+            }
+
+            .message-box {
+                min-height: 240px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="scene">
-      <div class="card" id="card">
+<div class="wrapper">
+    <div class="card-area" id="cardArea">
         <div class="inside">
-          <div class="left-page">
-            <h2>Happy Birthday, Mom</h2>
-            <p>
-              But there is no seashell quite like you!
-              So, celebrate like the Queen Conch you are!
-            </p>
-          </div>
+            <div class="page left-page">
+                <div class="beach-decor d1">🐚</div>
+                <div class="beach-decor d2">🪸</div>
+                <div class="beach-decor d3">🌊</div>
+                <div class="beach-decor d4">🐠</div>
 
-          <div class="right-page">
-            <div class="message-box">
-              <div class="message-top">Dear Mom,</div>
-
-              <div class="message-content">YOUR TEXT HERE</div>
-
-              <div class="message-bottom">Love, Maddie</div>
+                <h2><strong>But there is no seashell quite as special as you!</strong></h2>
+                <p>My love for you is deeper than an ocean, so celebrate like the Queen Conch you are!</p>
             </div>
-          </div>
+
+            <div class="page right-page">
+                <div class="beach-decor d1">🐚</div>
+                <div class="beach-decor d2">🐬</div>
+                <div class="beach-decor d3">🌊</div>
+                <div class="beach-decor d4">🪸</div>
+
+                <div class="message-box">
+                    <div class="message-top">Dear Mom,</div>
+                    <div class="message-content">Happiest of all birthdays to the best mom in this universe, galaxy, and world beyond our thoughts. I'm so sad that I'm not able to be with you on your most special day, so I coded you this custom website containing a birthday card! I can't take all the credit, as you gave me the idea for the theme of this card: our amazing trip together. I've formed so many memories with you laughing, crying, and everything in between...which I'm pretty sure is just watching food network while tell the competetors "they're missing acidity!" I hope that you have had the best day celebrating with all the people who love and adore you. You the other half to my heart and stomach, and I couldn't be prouder. I love you so much. </div>
+                    <div class="message-bottom">Love, Maddie</div>
+                </div>
+            </div>
+
+            <div class="fold"></div>
         </div>
 
         <div class="cover">
-          <div class="front">
-            <div class="front-content">
-              <h1>Happy Birthday</h1>
-              <p>
-                There are plenty of fish in the sea,
-                and more than enough grains of sand on a beach...
-              </p>
+            <div class="cover-content">
+                <div class="emoji-top">🐚 🌊 🪸</div>
+                <h1>Happy Birthday</h1>
+                <p>
+                    There are plenty of fish in the sea,
+                    and more than enough grains of sand on a beach...
+                </p>
+                <div class="emoji-bottom">🐠 🐚 🌊</div>
             </div>
-          </div>
-
-          <div class="back">
-            A birthday card made with love.
-          </div>
         </div>
-      </div>
     </div>
 
     <button class="toggle-btn" id="toggleBtn">Open / Close Card</button>
-  </div>
+</div>
 
-  <script>
-    const card = document.getElementById("card");
+<script>
+    const cardArea = document.getElementById("cardArea");
     const toggleBtn = document.getElementById("toggleBtn");
 
     toggleBtn.addEventListener("click", () => {
-      card.classList.toggle("open");
+        cardArea.classList.toggle("open");
     });
-  </script>
+</script>
 </body>
 </html>
