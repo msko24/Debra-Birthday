@@ -5,88 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Birthday Card for Mom</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 24px;
-      font-family: Georgia, "Times New Roman", serif;
-      background:
-        linear-gradient(to bottom, #9dd7f5 0%, #d8f0fb 38%, #f8ead0 38%, #efd9a7 100%);
-      overflow-x: hidden;
+      align-items: center;
+      background: linear-gradient(to bottom, #a9d9ef 0%, #d9eef8 45%, #e8d4a2 45%, #e2c98b 100%);
+      font-family: Georgia, serif;
     }
 
     .scene {
-      width: 100%;
-      max-width: 980px;
-      perspective: 2200px;
+      perspective: 2000px;
     }
 
-    .card-wrap {
+    .card {
       position: relative;
-      width: 100%;
-      height: 620px;
-    }
-
-    .card-base {
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      background:
-        linear-gradient(180deg, #fffaf0 0%, #fff6e6 100%);
-      box-shadow:
-        0 18px 40px rgba(76, 98, 107, 0.18),
-        0 8px 18px rgba(76, 98, 107, 0.12);
-      overflow: hidden;
-      border: 2px solid rgba(201, 179, 131, 0.45);
+      width: 800px;
+      height: 520px;
     }
 
     .inside {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      height: 100%;
-    }
-
-    .inside-left,
-    .inside-right {
-      position: relative;
-      padding: 42px 36px;
-    }
-
-    .inside-left {
-      background:
-        linear-gradient(180deg, rgba(255, 251, 240, 0.97), rgba(253, 244, 223, 0.98));
-      border-right: 1.5px solid rgba(199, 180, 138, 0.45);
-    }
-
-    .inside-right {
-      background:
-        linear-gradient(180deg, rgba(255, 250, 240, 0.98), rgba(248, 239, 218, 0.98));
-    }
-
-    .fold-shadow {
       position: absolute;
-      top: 0;
-      bottom: 0;
-      left: calc(50% - 8px);
-      width: 16px;
-      background: linear-gradient(
-        to right,
-        rgba(120, 103, 70, 0.1),
-        rgba(255,255,255,0.15),
-        rgba(120, 103, 70, 0.08)
-      );
-      pointer-events: none;
-      z-index: 2;
+      inset: 0;
+      display: flex;
+      background: #fffaf0;
+      border: 2px solid #d9c79a;
+      border-radius: 20px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+      overflow: hidden;
     }
 
-    .card-front {
+    .page {
+      width: 50%;
+      padding: 38px;
+      box-sizing: border-box;
+      background: #fffaf0;
+    }
+
+    .left-page {
+      border-right: 1px solid #e4d5b0;
+      position: relative;
+    }
+
+    .right-page {
+      position: relative;
+      background: #fffaf4;
+    }
+
+    .inside h2 {
+      margin: 0 0 18px;
+      font-size: 3rem;
+      line-height: 1.05;
+      color: #155d74;
+    }
+
+    .inside-pun {
+      font-size: 1.35rem;
+      font-style: italic;
+      color: #8a6430;
+      margin-bottom: 22px;
+    }
+
+    .inside p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #5e4c2d;
+      margin: 0;
+    }
+
+    .message-box {
+      border: 2px dashed #ccb47a;
+      border-radius: 18px;
+      padding: 24px;
+      min-height: 220px;
+      background: rgba(255,255,255,0.55);
+    }
+
+    .message-box h3 {
+      margin: 0 0 14px;
+      font-size: 1.8rem;
+      color: #155d74;
+    }
+
+    .message-box p {
+      margin: 0;
+      color: #6a5530;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .cover {
       position: absolute;
       inset: 0 auto 0 0;
       width: 50%;
@@ -94,314 +103,226 @@
       transform-style: preserve-3d;
       transition: transform 1s ease;
       cursor: pointer;
-      z-index: 5;
+      z-index: 2;
     }
 
-    .card-wrap.open .card-front {
-      transform: rotateY(-175deg);
+    .card.open .cover {
+      transform: rotateY(-180deg);
     }
 
-    .front-face,
-    .front-back {
+    .front,
+    .back {
       position: absolute;
       inset: 0;
       backface-visibility: hidden;
-      border-radius: 18px 0 0 18px;
+      border-radius: 20px 0 0 20px;
+      border: 2px solid #d9c79a;
+      box-sizing: border-box;
       overflow: hidden;
-      border-right: 1px solid rgba(162, 143, 108, 0.28);
     }
 
-    .front-face {
-      background:
-        linear-gradient(to bottom, #8fd1ee 0%, #c7ebf8 42%, #f4e1b5 42%, #e9cf8a 100%);
-      box-shadow:
-        8px 0 18px rgba(65, 88, 94, 0.12);
+    .front {
+      background: linear-gradient(to bottom, #88cde8 0%, #bfe6f4 48%, #efdca8 48%, #e6c97e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 30px;
+      box-shadow: 10px 0 20px rgba(0,0,0,0.12);
     }
 
-    .front-back {
+    .front-content {
+      background: rgba(255, 250, 238, 0.72);
+      border: 2px solid rgba(255,255,255,0.65);
+      border-radius: 20px;
+      padding: 32px 24px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .front .small {
+      font-size: 1.1rem;
+      color: #8a6430;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    .front h1 {
+      margin: 0;
+      font-size: 3.2rem;
+      line-height: 1.05;
+      color: #155d74;
+    }
+
+    .front .pun {
+      margin: 18px 0;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #6f5427;
+    }
+
+    .front .shells {
+      font-size: 1.8rem;
+      letter-spacing: 8px;
+      margin-top: 14px;
+    }
+
+    .front .tap {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: #155d74;
+    }
+
+    .back {
       transform: rotateY(180deg);
-      background:
-        linear-gradient(180deg, #fffaf0 0%, #f8efd6 100%);
+      background: #fffaf0;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 28px;
-    }
-
-    .front-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      padding: 34px 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       text-align: center;
     }
 
-    .front-frame {
-      position: absolute;
-      inset: 18px;
-      border: 2px solid rgba(255, 250, 236, 0.72);
-      border-radius: 14px;
-      pointer-events: none;
-    }
-
-    .cover-top {
-      margin-top: 18px;
-    }
-
-    .cover-script {
-      font-size: clamp(1.1rem, 2vw, 1.4rem);
-      color: #fffaf0;
-      letter-spacing: 0.04em;
-      font-style: italic;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.12);
-      margin-bottom: 14px;
-    }
-
-    .cover-title {
-      font-size: clamp(2.3rem, 4vw, 3.5rem);
-      color: #145b70;
-      margin: 0;
-      line-height: 1.08;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-    }
-
-    .cover-pun {
-      margin: 18px auto 0;
-      max-width: 310px;
-      font-size: clamp(1.05rem, 1.7vw, 1.25rem);
-      line-height: 1.6;
-      color: #6d4f20;
-      background: rgba(255, 248, 231, 0.72);
-      padding: 14px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(190, 162, 107, 0.35);
-    }
-
-    .tap-note {
-      display: inline-block;
-      align-self: center;
-      margin-bottom: 20px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      color: #145b70;
-      background: rgba(255, 251, 240, 0.8);
-      border: 1px solid rgba(170, 151, 115, 0.35);
-    }
-
-    .shell-row {
-      font-size: 1.8rem;
-      letter-spacing: 8px;
-      color: #fffaf0;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.14);
-    }
-
-    .inside-heading {
-      font-size: clamp(2rem, 3vw, 2.8rem);
-      color: #176173;
-      margin: 0 0 18px;
-      line-height: 1.1;
-    }
-
-    .inside-pun {
-      font-size: 1.2rem;
-      color: #7a5a25;
-      margin-bottom: 20px;
-      line-height: 1.6;
-      font-style: italic;
-    }
-
-    .inside-text {
-      font-size: 1.08rem;
-      color: #5c4c33;
-      line-height: 1.85;
-      margin: 0;
-    }
-
-    .message-box {
-      background: rgba(255, 252, 243, 0.88);
-      border: 2px dashed rgba(179, 156, 108, 0.65);
-      border-radius: 16px;
-      padding: 24px;
-      min-height: 290px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
-    }
-
-    .message-box h3 {
-      margin: 0 0 14px;
-      font-size: 1.35rem;
-      color: #176173;
-    }
-
-    .message-box p {
-      margin: 0;
-      font-size: 1.08rem;
-      line-height: 1.9;
-      color: #5c4c33;
-      white-space: pre-line;
-    }
-
-    .decoration {
-      position: absolute;
-      user-select: none;
-      pointer-events: none;
-      opacity: 0.95;
-    }
-
-    .shell1 { top: 18px; right: 24px; font-size: 2.1rem; }
-    .shell2 { bottom: 20px; left: 22px; font-size: 2rem; }
-    .shell3 { top: 20px; left: 22px; font-size: 1.9rem; }
-    .star1  { bottom: 26px; right: 28px; font-size: 1.8rem; }
-    .wave1  { bottom: 24px; left: 30px; font-size: 1.4rem; color: #2d8aa3; }
-    .wave2  { top: 28px; right: 36px; font-size: 1.4rem; color: #2d8aa3; }
-
-    .front-back-text {
-      font-size: 1.05rem;
+    .back p {
+      font-size: 1.1rem;
       line-height: 1.8;
-      color: #6a5731;
-      text-align: center;
-      max-width: 280px;
+      color: #735b2f;
+      margin: 0;
+      font-style: italic;
     }
 
-    .toggle-btn {
+    .decor {
       position: absolute;
-      left: 50%;
-      bottom: -66px;
-      transform: translateX(-50%);
+      font-size: 1.8rem;
+    }
+
+    .d1 { top: 20px; left: 22px; }
+    .d2 { top: 20px; right: 22px; }
+    .d3 { bottom: 18px; right: 24px; }
+    .d4 { bottom: 18px; left: 24px; }
+
+    button {
+      display: block;
+      margin: 26px auto 0;
+      padding: 12px 22px;
       border: none;
       border-radius: 999px;
-      padding: 12px 20px;
-      font-size: 0.98rem;
+      background: #fff8e8;
+      color: #155d74;
+      font-size: 1rem;
       cursor: pointer;
-      background: #fff7e5;
-      color: #176173;
-      border: 1px solid rgba(176, 153, 109, 0.4);
-      box-shadow: 0 10px 20px rgba(76, 98, 107, 0.14);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
     }
 
-    .toggle-btn:hover {
-      transform: translateX(-50%) translateY(-2px);
+    @media (max-width: 850px) {
+      .card {
+        width: 92vw;
+        height: 60vw;
+        min-height: 460px;
+      }
+
+      .inside h2 {
+        font-size: 2.2rem;
+      }
+
+      .front h1 {
+        font-size: 2.5rem;
+      }
     }
 
-    @media (max-width: 860px) {
-      .card-wrap {
-        height: 760px;
+    @media (max-width: 680px) {
+      .card {
+        height: 560px;
       }
 
-      .inside {
-        grid-template-columns: 1fr;
+      .page {
+        padding: 24px;
       }
 
-      .inside-left {
-        border-right: none;
-        border-bottom: 1.5px solid rgba(199, 180, 138, 0.45);
+      .inside h2 {
+        font-size: 1.8rem;
       }
 
-      .fold-shadow {
-        display: none;
-      }
-
-      .card-front {
-        width: 100%;
-      }
-
-      .front-face,
-      .front-back {
-        border-radius: 18px;
-      }
-
-      .card-wrap.open .card-front {
-        transform: rotateY(-178deg);
+      .inside-pun,
+      .front .pun,
+      .back p,
+      .inside p,
+      .message-box p {
+        font-size: 0.98rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="scene">
-    <div class="card-wrap" id="cardWrap">
-      <div class="card-base">
-        <div class="inside">
-          <section class="inside-left">
-            <div class="decoration shell3">🐚</div>
-            <div class="decoration wave2">〰</div>
+    <div class="card" id="card">
+      <div class="inside">
+        <div class="page left-page">
+          <div class="decor d1">🐚</div>
+          <div class="decor d2">〰️</div>
 
-            <h2 class="inside-heading">Happy Birthday, Mom</h2>
-            <div class="inside-pun">
-              Hope your birthday is seas-the-day special.
-            </div>
-            <p class="inside-text">
-              Wishing you a day full of sunshine, calm waves, little joys,
-              and all the love you bring to everyone around you.
-              You deserve a birthday that feels peaceful, beautiful, and full of happy memories.
-            </p>
-          </section>
-
-          <section class="inside-right">
-            <div class="decoration shell1">🐚</div>
-            <div class="decoration star1">⭐</div>
-            <div class="decoration wave1">〰</div>
-
-            <div class="message-box">
-              <h3>Your Personal Message</h3>
-              <p>YOUR TEXT HERE</p>
-            </div>
-          </section>
+          <h2>Happy Birthday,<br>Mom</h2>
+          <div class="inside-pun">
+            Like seashells, you make the world more colorful, beautiful, and one of a kind.
+          </div>
+          <p>
+            Wishing you a birthday filled with happiness, warmth, and all the little things
+            that make life feel special. You bring so much beauty and love into the lives of
+            everyone around you, and today is all about celebrating you.
+          </p>
         </div>
-        <div class="fold-shadow"></div>
+
+        <div class="page right-page">
+          <div class="decor d3">⭐</div>
+          <div class="message-box">
+            <h3>Your Personal Message</h3>
+            <p>YOUR TEXT HERE</p>
+          </div>
+        </div>
       </div>
 
-      <div class="card-front" id="cardFront" tabindex="0" role="button" aria-label="Open birthday card">
-        <div class="front-face">
-          <div class="front-frame"></div>
+      <div class="cover" id="cover" tabindex="0" role="button" aria-label="Open birthday card">
+        <div class="front">
           <div class="front-content">
-            <div class="cover-top">
-              <div class="cover-script">For Mom, with love</div>
-              <h1 class="cover-title">Happy Birthday</h1>
-              <div class="cover-pun">
-                Mom, I shell always be grateful for you.
-              </div>
+            <div class="small">For Mom</div>
+            <h1>Happy<br>Birthday</h1>
+            <div class="pun">
+              Like the most beautiful seashells,
+              you are unique, colorful, and truly amazing.
             </div>
-
-            <div class="shell-row">🐚 ✧ 🐚 ✧ 🐚</div>
-            <div class="tap-note">Click or tap to open</div>
+            <div class="shells">🐚 ✨ 🐚</div>
+            <div class="tap">Tap or click to open</div>
           </div>
         </div>
 
-        <div class="front-back">
-          <div class="front-back-text">
-            Open for a little shore-ly deserved birthday love.
-          </div>
+        <div class="back">
+          <p>
+            Wishing you an ocean of love on your special day.
+          </p>
         </div>
       </div>
-
-      <button class="toggle-btn" id="toggleBtn" type="button">Open / Close Card</button>
     </div>
+
+    <button id="toggleBtn">Open / Close Card</button>
   </div>
 
   <script>
-    const cardWrap = document.getElementById("cardWrap");
-    const cardFront = document.getElementById("cardFront");
+    const card = document.getElementById("card");
+    const cover = document.getElementById("cover");
     const toggleBtn = document.getElementById("toggleBtn");
 
     function toggleCard() {
-      cardWrap.classList.toggle("open");
+      card.classList.toggle("open");
     }
 
-    cardFront.addEventListener("click", toggleCard);
+    cover.addEventListener("click", toggleCard);
+    toggleBtn.addEventListener("click", toggleCard);
 
-    cardFront.addEventListener("keydown", function (event) {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
+    cover.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
         toggleCard();
       }
-    });
-
-    toggleBtn.addEventListener("click", function (event) {
-      event.stopPropagation();
-      toggleCard();
     });
   </script>
 </body>
