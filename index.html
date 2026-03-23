@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Mom</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: "Trebuchet MS", "Verdana", sans-serif;
+      background:
+        radial-gradient(circle at top, #fff8f3 0%, #ffe9df 35%, #ffd9d2 70%, #ffcfcf 100%);
+      overflow: hidden;
+    }
+
+    .background-shells {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .background-shells span {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.18;
+      animation: drift 16s linear infinite;
+    }
+
+    .background-shells span:nth-child(1) { top: 10%; left: 8%; animation-delay: 0s; }
+    .background-shells span:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; }
+    .background-shells span:nth-child(3) { top: 70%; left: 12%; animation-delay: 4s; }
+    .background-shells span:nth-child(4) { top: 78%; left: 75%; animation-delay: 6s; }
+    .background-shells span:nth-child(5) { top: 40%; left: 90%; animation-delay: 1s; }
+    .background-shells span:nth-child(6) { top: 55%; left: 4%; animation-delay: 5s; }
+
+    @keyframes drift {
+      0%   { transform: translateY(0) rotate(0deg); }
+      50%  { transform: translateY(-12px) rotate(8deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .scene {
+      width: 100%;
+      max-width: 900px;
+      perspective: 1800px;
+    }
+
+    .card-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 8 / 5.2;
+      min-height: 520px;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+      cursor: pointer;
+    }
+
+    .card.open {
+      transform: rotateY(-160deg);
+    }
+
+    .card-side {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      backface-visibility: hidden;
+      box-shadow:
+        0 18px 40px rgba(147, 94, 117, 0.18),
+        0 8px 18px rgba(147, 94, 117, 0.12);
+    }
+
+    .card-front {
+      background:
+        linear-gradient(145deg, #ffe7ef 0%, #fff4ef 45%, #fff9f3 100%);
+      border: 3px solid rgba(255, 208, 217, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      transform-origin: left center;
+      z-index: 3;
+    }
+
+    .front-inner {
+      width: 100%;
+      height: 100%;
+      border: 2px dashed rgba(227, 177, 189, 0.7);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 30px;
+      overflow: hidden;
+    }
+
+    .front-inner::before,
+    .front-inner::after {
+      position: absolute;
+      font-size: 4rem;
+      opacity: 0.18;
+    }
+
+    .front-inner::before {
+      content: "🐚";
+      top: 16px;
+      left: 22px;
+      transform: rotate(-18deg);
+    }
+
+    .front-inner::after {
+      content: "🩷";
+      bottom: 20px;
+      right: 26px;
+    }
+
+    .front-shells {
+      font-size: 2rem;
+      letter-spacing: 10px;
+      margin-bottom: 18px;
+    }
+
+    .card-front h1 {
+      font-size: clamp(2rem, 5vw, 3.7rem);
+      color: #cc7b93;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+
+    .card-front p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: #9e6d7b;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .tap-note {
+      margin-top: 24px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: #b36d84;
+      font-size: 0.95rem;
+      border: 1px solid rgba(231, 184, 196, 0.8);
+    }
+
+    .card-inside {
+      background:
+        linear-gradient(135deg, #fffefb 0%, #fff3ec 48%, #ffeceb 100%);
+      border: 3px solid rgba(255, 219, 211, 0.9);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .inside-left,
+    .inside-right {
+      padding: 34px 30px;
+      position: relative;
+    }
+
+    .inside-left {
+      border-right: 2px solid rgba(240, 206, 198, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,245,240,0.7));
+    }
+
+    .inside-left h2 {
+      color: #c8708b;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .inside-left p {
+      color: #8f6d74;
+      font-size: 1.06rem;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .inside-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.9), rgba(255,241,236,0.95));
+    }
+
+    .message-box {
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px dashed #e7b7c4;
+      border-radius: 20px;
+      padding: 24px;
+      min-height: 240px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    .message-box h3 {
+      color: #c8708b;
+      margin-bottom: 14px;
+      font-size: 1.3rem;
+    }
+
+    .message-box p {
+      color: #7e6670;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      white-space: pre-line;
+    }
+
+    .corner-shell,
+    .pearl,
+    .starfish {
+      position: absolute;
+      opacity: 0.9;
+      user-select: none;
+    }
+
+    .corner-shell {
+      font-size: 2rem;
+    }
+
+    .starfish {
+      font-size: 1.8rem;
+    }
+
+    .pearl {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #f6dbe2 70%, #e9bcc9 100%);
+      box-shadow: 0 0 10px rgba(255,255,255,0.65);
+    }
+
+    .shell-1 { top: 14px; right: 20px; transform: rotate(18deg); }
+    .shell-2 { bottom: 18px; left: 24px; transform: rotate(-18deg); }
+    .star-1  { bottom: 28px; right: 30px; }
+    .pearl-1 { top: 34px; left: 26px; }
+    .pearl-2 { bottom: 44px; right: 86px; }
+
+    .reopen-btn {
+      position: absolute;
+      bottom: -62px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: none;
+      border-radius: 999px;
+      padding: 12px 20px;
+      background: #fff6f8;
+      color: #b26f84;
+      font-size: 0.98rem;
+      box-shadow: 0 10px 22px rgba(178, 111, 132, 0.16);
+      cursor: pointer;
+      border: 1px solid rgba(232, 187, 198, 0.9);
+    }
+
+    .reopen-btn:hover {
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    @media (max-width: 760px) {
+      .card-wrapper {
+        aspect-ratio: auto;
+        min-height: 620px;
+      }
+
+      .card-inside {
+        grid-template-columns: 1fr;
+      }
+
+      .inside-left {
+        border-right: none;
+        border-bottom: 2px solid rgba(240, 206, 198, 0.8);
+      }
+
+      .card.open {
+        transform: rotateY(-175deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-shells" aria-hidden="true">
+    <span>🐚</span>
+    <span>🪸</span>
+    <span>🐚</span>
+    <span>🩷</span>
+    <span>✨</span>
+    <span>🐚</span>
+  </div>
+
+  <div class="scene">
+    <div class="card-wrapper">
+      <div class="card" id="birthdayCard" role="button" aria-label="Open birthday card" tabindex="0">
+        <div class="card-side card-inside">
+          <div class="inside-left">
+            <span class="corner-shell shell-1">🐚</span>
+            <span class="corner-shell shell-2">🪸</span>
+            <span class="pearl pearl-1"></span>
+
+            <h2>Happy Birthday, Mom!</h2>
+            <p>
+              Wishing you a day filled with love, joy, and beautiful little moments,
+              just like treasures washed up on the shore.
+            </p>
+            <p>
+              Thank you for all the warmth, kindness, and love you bring into my life.
+            </p>
+          </div>
+
+          <div class="inside-right">
+            <span class="starfish star-1">⭐</span>
+            <span class="pearl pearl-2"></span>
+
+            <div class="message-box">
+              <h3>My Message to You</h3>
+              <p>YOUR TEXT HERE</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-side card-front">
+          <div class="front-inner">
+            <div class="front-shells">🐚 ✨ 🪸 ✨ 🐚</div>
+            <h1>Happy Birthday Mom</h1>
+            <p>
+              A little seashell birthday card made with love.
+            </p>
+            <div class="tap-note">Tap or click to open</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="reopen-btn" id="toggleButton" type="button">Open / Close Card</button>
+    </div>
+  </div>
+
+  <script>
+    const card = document.getElementById("birthdayCard");
+    const toggleButton = document.getElementById("toggleButton");
+
+    function toggleCard() {
+      card.classList.toggle("open");
+    }
+
+    card.addEventListener("click", toggleCard);
+    toggleButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+      toggleCard();
+    });
+
+    card.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleCard();
+      }
+    });
+  </script>
+</body>
+</html>
